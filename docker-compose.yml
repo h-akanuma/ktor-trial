@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  ktor-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ktor-trial:latest
+    ports:
+      - "8080:8080"
