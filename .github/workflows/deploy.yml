@@ -18,6 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Build application with Gradle
+        run: ./gradlew clean build --no-daemon
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
