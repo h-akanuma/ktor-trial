@@ -31,6 +31,9 @@ jobs:
         with:
           project_id: ${{ secrets.GOOGLECLOUD_PROJECT_ID }}
 
+      - name: Configure Docker
+        run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
       - name: Build Docker image
         run: |
           docker build -t gcr.io/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }} .
