@@ -15,7 +15,7 @@ class ApplicationTest {
         }
 
         client.get("/").apply {
-            assertEquals(HttpStatusCode.NotFound, status)
+            assertEquals(HttpStatusCode.OK, status)
         }
     }
 
