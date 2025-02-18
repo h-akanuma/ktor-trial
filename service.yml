@@ -1,0 +1,8 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ktor-trial
+spec:
+  template:
+    spec:
+      serviceAccountName: ktor-trial-service-account-515@ktor-trial.iam.gserviceaccount.com

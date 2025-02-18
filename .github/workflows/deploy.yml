@@ -45,15 +45,7 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
+          metadata: service.yml
           image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
           region: asia-northeast1     # 例：東京リージョン。適宜変更してください
-          metadata: |
-            apiVersion: serving.knative.dev/v1
-            kind: Service
-            metadata:
-              name: ktor-trial
-            spec:
-              template:
-                spec:
-                  serviceAccountName: ktor-trial-service-account-515@ktor-trial.iam.gserviceaccount.com
           project_id: ${{ secrets.GOOGLECLOUD_PROJECT_ID }}
