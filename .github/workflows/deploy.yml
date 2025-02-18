@@ -48,3 +48,4 @@ jobs:
           image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
           service: ktor-trial           # Cloud Run 上のサービス名
           region: asia-northeast1     # 例：東京リージョン。適宜変更してください
+          service_account: ktor-trial-service-account-515@ktor-trial.iam.gserviceaccount.com
