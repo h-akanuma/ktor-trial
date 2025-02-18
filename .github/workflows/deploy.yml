@@ -48,3 +48,13 @@ jobs:
           image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
           service: ktor-trial           # Cloud Run 上のサービス名
           region: asia-northeast1     # 例：東京リージョン。適宜変更してください
+
+      - name: Allow unauthenticated invocations
+        run: |
+          gcloud run services add-iam-policy-binding ktor-trial \
+            --member="allUsers" \
+            --role="roles/run.invoker" \
+            --region=asia-northeast1 \
+            --project=${{ secrets.GOOGLECLOUD_PROJECT_ID }}
+
+
