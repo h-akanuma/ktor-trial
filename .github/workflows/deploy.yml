@@ -36,15 +36,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }} .
+          docker build -t asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }} .
 
       - name: Push Docker image
         run: |
-          docker push gcr.io/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }}
+          docker push asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          image: gcr.io/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }}
+          image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial:${{ github.sha }}
           service: ktor-trial           # Cloud Run 上のサービス名
           region: asia-northeast1     # 例：東京リージョン。適宜変更してください
