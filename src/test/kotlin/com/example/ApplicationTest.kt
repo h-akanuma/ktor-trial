@@ -1,11 +1,11 @@
 package com.example
 
+import com.example.module
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.testing.testApplication
-import kotlin.test.Test
+import org.junit.Test
 import kotlin.test.assertEquals
-
 
 class ApplicationTest {
     @Test
@@ -15,7 +15,7 @@ class ApplicationTest {
         }
 
         client.get("/").apply {
-            assertEquals(HttpStatusCode.OK, status)
+            assertEquals(HttpStatusCode.Companion.OK, status)
         }
     }
 
