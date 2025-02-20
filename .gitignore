@@ -39,3 +39,7 @@ out/
 
 ### Mac ###
 *.DS_Store
+
+### DB ###
+/docker/ktor_trial_db/db
+/docker/test_db/db

@@ -8,3 +8,43 @@ services:
     image: ktor-trial:latest
     ports:
       - "8080:8080"
+  ktor-trial-db:
+    container_name: trial_db
+    image: mysql:8.0.33
+    build:
+      # setting parent directory as context to read files in other directory
+      context: .
+      dockerfile: docker/ktor_trial_db/Dockerfile
+    ports:
+      - "3316:3316"
+    environment:
+      MYSQL_DATABASE: ktor_trial
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_TCP_PORT: 3316
+      TZ: "Asia/Tokyo"
+    # comment in bellow to change user group and avoid error in windows docker-tools
+    # command: bash -c 'usermod -o -u 1000 mysql; groupmod -o -g 500 mysql; chown -R mysql:root /var/run/mysqld/; /entrypoint.sh mysqld --user=mysql --console'
+    volumes:
+      - ./docker/ktor_trial_db/db:/var/lib/mysql
+  test-db:
+    container_name: test_db
+    image: mysql:8.0.33
+    build:
+      # setting parent directory as context to read files in other directory
+      context: ../
+      dockerfile: docker/test_db/Dockerfile
+    ports:
+      - "3317:3317"
+    environment:
+      MYSQL_DATABASE: ktor_trial
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_TCP_PORT: 3317
+      TZ: "Asia/Tokyo"
+    # comment in bellow to change user group and avoid error in windows docker-tools
+    # command: bash -c 'usermod -o -u 1000 mysql; groupmod -o -g 500 mysql; chown -R mysql:root /var/run/mysqld/; /entrypoint.sh mysqld --user=mysql --console'
+    volumes:
+      - ./docker/test_db/db:/var/lib/mysql
