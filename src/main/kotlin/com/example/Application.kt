@@ -15,5 +15,6 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
+    configureDatabases()
     configureRouting()
 }
