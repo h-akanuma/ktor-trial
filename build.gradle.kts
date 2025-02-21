@@ -30,7 +30,8 @@ dependencies {
     implementation(libs.ktor.server.call.logging)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
-    implementation(libs.h2)
+    implementation(libs.mysql.connector.j)
+    implementation(libs.mysql.socket.factory.connector.j8)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
