@@ -12,10 +12,12 @@ import io.ktor.server.routing.put
 import org.jetbrains.exposed.sql.Database
 
 fun Application.configureDatabases() {
+    val config = environment.config
     val database = Database.connect(
-        url = "jdbc:mysql://127.0.0.1:3316/ktor_trial?nullNamePatternMatchesAll=true&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false",
-        user = "test_user",
-        password = "password",
+//        url = "jdbc:mysql://127.0.0.1:3316/ktor_trial?nullNamePatternMatchesAll=true&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false",
+        url = config.property("trial.database.jdbcUrl").getString(),
+        user = config.property("trial.database.userName").getString(),
+        password = config.property("trial.database.password").getString()
     )
 
     val userService = UserService(database)
