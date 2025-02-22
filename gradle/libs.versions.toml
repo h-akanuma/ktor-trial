@@ -23,6 +23,7 @@ mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mys
 mysql-socket-factory-connector-j8 = { module = "com.google.cloud.sql:mysql-socket-factory-connector-j-8", version.ref = "mysql-socket-factory-connector-j-8" }
 
 [plugins]
+kotlin = { id = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }

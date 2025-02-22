@@ -1,37 +1,29 @@
-
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ktor)
+    alias(libs.plugins.kotlin.jvm) // For refer kotlin plugin via `libs.plugin.kotlin`
+    alias(libs.plugins.ktor) // For refer `run` task via `task.named("run")`
 }
 
 group = "com.example"
 version = "0.0.1"
 
-application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
-repositories {
-    mavenCentral()
+subprojects {
+    // For refer libs.versions.toml in subprojects section.
+    val libs = rootProject.libs
+
+    // For using `implementation()` in dependencies section.
+    apply(plugin = libs.plugins.kotlin.asProvider().get().pluginId)
+
+    dependencies {
+    }
 }
 
-dependencies {
-    implementation(libs.ktor.server.core)
-    implementation(libs.ktor.server.netty)
-    implementation(libs.logback.classic)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.server.core)
-    implementation(libs.ktor.server.config.yaml)
-    implementation(libs.ktor.server.content.negotiation)
-    implementation(libs.ktor.server.call.logging)
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.jdbc)
-    implementation(libs.mysql.connector.j)
-    implementation(libs.mysql.socket.factory.connector.j8)
-    testImplementation(libs.ktor.server.test.host)
-    testImplementation(libs.kotlin.test.junit)
+// Run `run` task in infrastructure subproject when `run` task in root project is executed.
+tasks.named("run") {
+    dependsOn(":infrastructure:run")
 }

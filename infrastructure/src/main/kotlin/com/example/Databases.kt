@@ -4,17 +4,16 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import io.ktor.server.routing.delete
-import io.ktor.server.routing.routing
 import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.put
+import io.ktor.server.routing.delete
 import org.jetbrains.exposed.sql.Database
 
 fun Application.configureDatabases() {
     val config = environment.config
     val database = Database.connect(
-//        url = "jdbc:mysql://127.0.0.1:3316/ktor_trial?nullNamePatternMatchesAll=true&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false",
         url = config.property("trial.database.jdbcUrl").getString(),
         user = config.property("trial.database.userName").getString(),
         password = config.property("trial.database.password").getString()
