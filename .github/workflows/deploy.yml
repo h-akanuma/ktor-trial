@@ -51,7 +51,7 @@ jobs:
           flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --timeout=300s"
           env_vars: |
             JDBC_URL=jdbc:mysql://google/ktor_trial?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
-          env_vars_update_strategy: replace
+          env_vars_update_strategy: overwrite
 
       - name: Allow unauthenticated invocations
         run: |
