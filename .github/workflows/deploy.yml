@@ -48,7 +48,7 @@ jobs:
           image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
           service: ktor-trial           # Cloud Run 上のサービス名
           region: asia-northeast1     # 例：東京リージョン。適宜変更してください
-          flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}"
+          flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --timeout=300s"
           env_vars: |
             JDBC_URL=jdbc:mysql://google/ktor_trial?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
 
