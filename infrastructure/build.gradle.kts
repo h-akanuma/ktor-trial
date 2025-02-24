@@ -36,3 +36,6 @@ tasks.withType<ShadowJar> {
 tasks.named<JavaExec>("run") {
     environment("JDBC_URL", "jdbc:mysql://localhost:3316/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false")
 }
+tasks.withType<Test> {
+    environment("JDBC_URL", "jdbc:mysql://localhost:3317/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false")
+}
