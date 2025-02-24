@@ -9,6 +9,22 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.4.4
+        ports:
+          - 3317:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: password
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     # 必要なパーミッション（id-token は Cloud Run のデプロイで必要）
     permissions:
       contents: read
