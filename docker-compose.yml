@@ -12,11 +12,11 @@ services:
       JDBC_URL: "jdbc:mysql://ktor-trial-db:3316/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false"
   ktor-trial-db:
     container_name: trial_db
-    image: mysql:8.0.33
-    build:
-      # setting parent directory as context to read files in other directory
-      context: .
-      dockerfile: docker/ktor_trial_db/Dockerfile
+    image: mysql:8.4.4
+#    build:
+#      # setting parent directory as context to read files in other directory
+#      context: .
+#      dockerfile: docker/ktor_trial_db/Dockerfile
     ports:
       - "3316:3316"
     environment:
@@ -32,15 +32,15 @@ services:
       - ./docker/ktor_trial_db/db:/var/lib/mysql
   test-db:
     container_name: test_db
-    image: mysql:8.0.33
-    build:
-      # setting parent directory as context to read files in other directory
-      context: ../
-      dockerfile: docker/test_db/Dockerfile
+    image: mysql:8.4.4
+#    build:
+#      # setting parent directory as context to read files in other directory
+#      context: .
+#      dockerfile: docker/test_db/Dockerfile
     ports:
       - "3317:3317"
     environment:
-      MYSQL_DATABASE: ktor_trial
+      MYSQL_DATABASE: test_db
       MYSQL_USER: test_user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: root_password

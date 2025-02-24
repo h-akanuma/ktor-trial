@@ -1,4 +1,4 @@
-FROM mysql:8-debian
+FROM mysql:8.0.33-debian
 
 # copy conf file
 COPY ./docker/test_db/mysql.conf.d /etc/mysql/mysql.conf.d
