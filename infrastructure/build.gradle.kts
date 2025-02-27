@@ -13,6 +13,8 @@ application {
 }
 
 dependencies {
+    implementation(project(":interfaces"))
+
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
@@ -25,8 +27,12 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.mysql.connector.j)
     implementation(libs.mysql.socket.factory.connector.j8)
+    implementation(libs.koin.ktor)
+    implementation(libs.koin.logger.slf4j)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit5)
 }
 
 tasks.withType<ShadowJar> {

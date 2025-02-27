@@ -7,6 +7,7 @@ exposed-version = "0.58.0"
 mysql-connector-j = "9.2.0"
 mysql-socket-factory-connector-j-8 = "1.13.1"
 flyway = "11.3.3"
+koin = "4.0.1"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -23,6 +24,10 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector-j" }
 mysql-socket-factory-connector-j8 = { module = "com.google.cloud.sql:mysql-socket-factory-connector-j-8", version.ref = "mysql-socket-factory-connector-j-8" }
 flyway-mysql = { module = "org.flywaydb:flyway-mysql", version.ref = "flyway" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
 
 [plugins]
 kotlin = { id = "kotlin" }
