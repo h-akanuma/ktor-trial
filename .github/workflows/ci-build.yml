@@ -46,5 +46,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Migrate Test DB
+        run: ./gradlew flywayMigrateTestDB
+
       - name: Build with Gradle
         run: ./gradlew clean :infrastructure:build --no-daemon

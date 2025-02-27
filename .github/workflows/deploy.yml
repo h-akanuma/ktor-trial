@@ -34,6 +34,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Migrate Test DB
+        run: ./gradlew flywayMigrateTestDB
+
       - name: Build application with Gradle
         run: ./gradlew clean :infrastructure:build --no-daemon
 
