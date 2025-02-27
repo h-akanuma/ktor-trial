@@ -49,7 +49,7 @@ tasks.withType<Test> {
 jib {
     from {
         // Java アプリケーション用の軽量な実行環境イメージ
-        image = "gcr.io/distroless/java"
+        image = "gcr.io/distroless/java21"
     }
     container {
         // コンテナがリッスンするポート
