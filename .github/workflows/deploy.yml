@@ -37,8 +37,8 @@ jobs:
       - name: Migrate Test DB
         run: ./gradlew flywayMigrateTestDB
 
-      - name: Build application with Gradle
-        run: ./gradlew clean :infrastructure:build --no-daemon
+      - name: Execute Test
+        run: ./gradlew test
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
