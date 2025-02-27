@@ -8,6 +8,7 @@ mysql-connector-j = "9.2.0"
 mysql-socket-factory-connector-j-8 = "1.13.1"
 flyway = "11.3.3"
 koin = "4.0.1"
+google-cloud-tools = "3.4.4"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -35,3 +36,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
 flyway = { id = "org.flywaydb.flyway", version.ref = "flyway" }
+google-cloud-tools-jib = { id = "com.google.cloud.tools.jib", version.ref = "google-cloud-tools" }

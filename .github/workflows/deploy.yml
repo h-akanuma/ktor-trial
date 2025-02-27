@@ -50,23 +50,18 @@ jobs:
         with:
           project_id: ${{ secrets.GOOGLECLOUD_PROJECT_ID }}
 
-      - name: Configure Docker
-        run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
-
-      - name: Build Docker image
+      - name: Build and Push Container Image with Jib
         run: |
-          docker build -t asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }} .
-
-      - name: Push Docker image
-        run: |
-          docker push asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
+          ./gradlew :infrastructure:jib \
+            -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}" \
+            -Djib.container.jvmFlags="-Dio.ktor.config.file=application.conf"
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
           service: ktor-trial           # Cloud Run 上のサービス名
-          region: asia-northeast1     # 例：東京リージョン。適宜変更してください
+          region: asia-northeast1     # 東京リージョン
           flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --timeout=300s"
           env_vars: |
             JDBC_URL=jdbc:mysql://google/ktor_trial?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
@@ -78,5 +73,3 @@ jobs:
             --role="roles/run.invoker" \
             --region=asia-northeast1 \
             --project=${{ secrets.GOOGLECLOUD_PROJECT_ID }}
-
-

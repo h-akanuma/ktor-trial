@@ -45,3 +45,16 @@ tasks.named<JavaExec>("run") {
 tasks.withType<Test> {
     environment("JDBC_URL", "jdbc:mysql://localhost:3317/test_db?allowPublicKeyRetrieval=true&useSSL=false")
 }
+
+jib {
+    from {
+        // Java アプリケーション用の軽量な実行環境イメージ
+        image = "gcr.io/distroless/java"
+    }
+    container {
+        // コンテナがリッスンするポート
+        ports = listOf("8080")
+        // 必要に応じてメインクラスを明示的に指定（JAR のマニフェストに設定されていれば不要）
+        mainClass = "io.ktor.server.netty.EngineMain"
+    }
+}
