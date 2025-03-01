@@ -54,6 +54,7 @@ jobs:
         run: |
           ./gradlew :infrastructure:jib \
             -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}-staging" \
+            -Djib.container.args="-config=application.staging.conf"
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
