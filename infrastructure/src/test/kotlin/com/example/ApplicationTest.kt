@@ -13,7 +13,7 @@ class ApplicationTest {
     fun testRoot() = testApplication {
         environment {
             config = HoconApplicationConfig(
-                ConfigFactory.systemEnvironment().withFallback(ConfigFactory.load())
+                ConfigFactory.systemEnvironment().withFallback(ConfigFactory.load("application.test.conf"))
             )
         }
 

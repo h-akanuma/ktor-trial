@@ -43,3 +43,6 @@ out/
 ### DB ###
 /docker/ktor_trial_db/db
 /docker/test_db/db
+
+### Logs ###
+infrastructure/logs

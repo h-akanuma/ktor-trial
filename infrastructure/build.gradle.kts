@@ -40,6 +40,7 @@ tasks.withType<ShadowJar> {
 }
 
 tasks.named<JavaExec>("run") {
+    args = (project.findProperty("appArgs") as? String)?.split(" ") ?: listOf("-config=application.local.conf")
     environment("JDBC_URL", "jdbc:mysql://localhost:3316/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false")
 }
 tasks.withType<Test> {
