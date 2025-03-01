@@ -2,6 +2,7 @@ package com.example
 
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.application.log
 import io.ktor.server.netty.EngineMain
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
@@ -13,6 +14,9 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    val deployEnv = environment.config.propertyOrNull("ktor.deployment.environment")?.getString()
+    log.info("Deployment environment: $deployEnv")
+
     install(Koin) {
         modules(Module.modules())
     }
