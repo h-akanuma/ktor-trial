@@ -57,5 +57,7 @@ jib {
         ports = listOf("8080")
         // 必要に応じてメインクラスを明示的に指定（JAR のマニフェストに設定されていれば不要）
         mainClass = "io.ktor.server.netty.EngineMain"
+
+        args = listOf("-config=application.staging.conf")
     }
 }
