@@ -62,7 +62,7 @@ jobs:
           region: asia-northeast1     # 東京リージョン
           flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --timeout=300s"
           env_vars: |
-            JDBC_URL=jdbc:mysql://google/ktor_trial_production?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&useSSL=false&allowPublicKeyRetrieval=true
+            JDBC_URL=jdbc:mysql://google/ktor_trial_production?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&allowPublicKeyRetrieval=true
             DB_USER=${{ secrets.DB_USER_PRODUCTION }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD_PRODUCTION }}
 
