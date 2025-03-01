@@ -1,0 +1,77 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main  # mainブランチに push されたときに実行
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.4.4
+        ports:
+          - 3317:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: password
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    # 必要なパーミッション（id-token は Cloud Run のデプロイで必要）
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Migrate Test DB
+        run: ./gradlew flywayMigrateTestDB
+
+      - name: Execute Test
+        run: ./gradlew test
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GOOGLECLOUD_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GOOGLECLOUD_PROJECT_ID }}
+
+      - name: Build and Push Container Image with Jib
+        run: |
+          ./gradlew :infrastructure:jib \
+            -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}" \
+            -Djib.container.jvmFlags="-Dio.ktor.config.file=application.staging.conf"
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
+          service: ktor-trial-staging # Cloud Run 上のサービス名
+          region: asia-northeast1     # 東京リージョン
+          flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --timeout=300s"
+          env_vars: |
+            JDBC_URL=jdbc:mysql://google/ktor_trial_staging?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
+            DB_USER=${{ secrets.DB_USER_STAGING }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD_STAGING }}
+
+      - name: Allow unauthenticated invocations
+        run: |
+          gcloud run services add-iam-policy-binding ktor-trial \
+            --member="allUsers" \
+            --role="roles/run.invoker" \
+            --region=asia-northeast1 \
+            --project=${{ secrets.GOOGLECLOUD_PROJECT_ID }}
