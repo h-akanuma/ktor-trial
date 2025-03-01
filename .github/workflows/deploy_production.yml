@@ -1,9 +1,7 @@
-name: Deploy to Cloud Run
+name: Deploy to Cloud Run Production
 
 on:
-  push:
-    branches:
-      - main  # mainブランチに push されたときに実行
+  workflow_dispatch:
 
 jobs:
   build-deploy:
@@ -53,18 +51,20 @@ jobs:
       - name: Build and Push Container Image with Jib
         run: |
           ./gradlew :infrastructure:jib \
-            -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}" \
-            -Djib.container.jvmFlags="-Dio.ktor.config.file=application.conf"
+            -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}-production" \
+            -Djib.container.jvmFlags="-Dio.ktor.config.file=application.production.conf"
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}
-          service: ktor-trial           # Cloud Run 上のサービス名
+          image: asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}-production
+          service: ktor-trial-production # Cloud Run 上のサービス名
           region: asia-northeast1     # 東京リージョン
           flags: "--add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --timeout=300s"
           env_vars: |
-            JDBC_URL=jdbc:mysql://google/ktor_trial?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
+            JDBC_URL=jdbc:mysql://google/ktor_trial_production?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
+            DB_USER=${{ secrets.DB_USER_PRODUCTION }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD_PRODUCTION }}
 
       - name: Allow unauthenticated invocations
         run: |
