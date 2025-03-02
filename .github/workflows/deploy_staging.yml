@@ -77,7 +77,7 @@ jobs:
 
       - name: Allow unauthenticated invocations
         run: |
-          gcloud run services add-iam-policy-binding ktor-trial \
+          gcloud run services add-iam-policy-binding ktor-trial-staging \
             --member="allUsers" \
             --role="roles/run.invoker" \
             --region=asia-northeast1 \
