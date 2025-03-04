@@ -50,3 +50,12 @@ services:
     # command: bash -c 'usermod -o -u 1000 mysql; groupmod -o -g 500 mysql; chown -R mysql:root /var/run/mysqld/; /entrypoint.sh mysqld --user=mysql --console'
     volumes:
       - ./docker/test_db/db:/var/lib/mysql
+  jaeger:
+    image: jaegertracing/jaeger:2.3.0
+    container_name: jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+      - "5778:5778"
+      - "9411:9411"
