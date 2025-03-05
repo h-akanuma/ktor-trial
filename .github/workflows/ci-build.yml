@@ -49,7 +49,10 @@ jobs:
       - name: Migrate Test DB
         run: ./gradlew flywayMigrateTestDB
 
+      - name: Clean build artifacts
+        run: ./gradlew clean
+
       - name: Build with Gradle
-        run: ./gradlew clean :infrastructure:build --no-daemon
+        run: ./gradlew :infrastructure:build --no-daemon
         env:
           IS_OPENTELEMETRY_READY: "false"
