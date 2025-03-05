@@ -55,6 +55,8 @@ jobs:
           ./gradlew :infrastructure:jib \
             -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}-staging" \
             -Djib.container.args="-config=application.staging.conf"
+        env:
+          IS_OPENTELEMETRY_READY: "false"
 
       - name: Migrate DB
         run: ./gradlew flywayMigrate
