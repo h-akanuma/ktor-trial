@@ -54,7 +54,7 @@ jobs:
         run: |
           ./gradlew :infrastructure:jib \
             -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}-staging" \
-            -Djib.container.args="-config=application.staging.conf"
+            -Djib.container.args="-config=application.staging.conf,-Dotel.service.name=ktor-trial-staging,-Dotel.metrics.exporter=google_cloud_monitoring,-Dotel.traces.exporter=google_cloud_trace"
         env:
           IS_OPENTELEMETRY_READY: "true"
 
@@ -76,9 +76,6 @@ jobs:
             JDBC_URL=jdbc:mysql://google/ktor_trial_staging?cloudSqlInstance=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&allowPublicKeyRetrieval=true
             DB_USER=${{ secrets.DB_USER_STAGING }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD_STAGING }}
-            IS_OPENTELEMETRY_READY=true
-            OTEL_SERVICE_NAME=ktor-trial-staging
-            OTEL_TRACES_EXPORTER=google_cloud_trace
 
       - name: Allow unauthenticated invocations
         run: |

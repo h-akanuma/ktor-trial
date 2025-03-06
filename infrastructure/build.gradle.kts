@@ -9,6 +9,7 @@ plugins {
 
 val isOpenTelemetryReady = (System.getenv("IS_OPENTELEMETRY_READY") ?: "true") == "true"
 val openTelemetryAgentJar = layout.buildDirectory.file("otel/opentelemetry-javaagent.jar").get().asFile
+val openTelemetryExporterAutoJar = layout.buildDirectory.file("exporter-auto.jar").get().asFile
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
@@ -18,6 +19,7 @@ application {
 
     if (isOpenTelemetryReady) {
         applicationDefaultJvmArgs += "-javaagent:$openTelemetryAgentJar"
+        applicationDefaultJvmArgs += "-Dotel.javaagent.extensions=$openTelemetryExporterAutoJar"
     }
 }
 
@@ -69,6 +71,12 @@ task<Download>("downloadOpenTelemetryJavaAgent") {
     dest(file(openTelemetryAgentJar))
 }
 
+task<Download>("downloadOpenTelemetryExporterAuto") {
+    onlyIf { isOpenTelemetryReady }
+    src("https://repo1.maven.org/maven2/com/google/cloud/opentelemetry/exporter-auto/${libs.versions.opentelemetry.exporter.auto.get()}-alpha/exporter-auto-${libs.versions.opentelemetry.exporter.auto.get()}-alpha-shaded.jar")
+    dest(file(openTelemetryExporterAutoJar))
+}
+
 jib {
     from {
         // Java アプリケーション用の軽量な実行環境イメージ
@@ -85,4 +93,6 @@ jib {
 tasks.configureEach {
     if (name == "downloadOpenTelemetryJavaAgent") return@configureEach
     dependsOn("downloadOpenTelemetryJavaAgent")
+    if (name == "downloadOpenTelemetryExporterAuto") return@configureEach
+    dependsOn("downloadOpenTelemetryExporterAuto")
 }
