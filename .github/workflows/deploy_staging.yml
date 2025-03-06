@@ -54,9 +54,11 @@ jobs:
         run: |
           ./gradlew :infrastructure:jib \
             -Djib.to.image="asia-northeast1-docker.pkg.dev/${{ secrets.GOOGLECLOUD_PROJECT_ID }}/ktor-trial/ktor-trial:${{ github.sha }}-staging" \
-            -Djib.container.args="-config=application.staging.conf,-Dotel.service.name=ktor-trial-staging,-Dotel.metrics.exporter=google_cloud_monitoring,-Dotel.traces.exporter=google_cloud_trace"
+            -Djib.container.args="-config=application.staging.conf,-Dotel.service.name=ktor-trial-staging,-Dotel.metrics.exporter=google_cloud_monitoring,-Dotel.traces.exporter=google_cloud_trace,-javaagent:$OTEL_JAVAAGENT_PATH,-Dotel.javaagent.extensions=$OTEL_EXPORTER_AUTO_PATH"
         env:
           IS_OPENTELEMETRY_READY: "true"
+          OTEL_JAVAAGENT_PATH: /otel/opentelemetry-javaagent.jar
+          OTEL_EXPORTER_AUTO_PATH: /exporter-auto.jar
 
       - name: Migrate DB
         run: ./gradlew flywayMigrate

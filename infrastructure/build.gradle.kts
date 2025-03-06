@@ -19,7 +19,6 @@ application {
 
     if (isOpenTelemetryReady) {
         applicationDefaultJvmArgs += "-javaagent:$openTelemetryAgentJar"
-        applicationDefaultJvmArgs += "-Dotel.javaagent.extensions=$openTelemetryExporterAutoJar"
     }
 }
 
