@@ -78,7 +78,7 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD_STAGING }}
             IS_OPENTELEMETRY_READY=true
             OTEL_SERVICE_NAME=ktor-trial-staging
-            OTEL_TRACES_EXPORTER=google_cloud
+            OTEL_TRACES_EXPORTER=google_cloud_trace
 
       - name: Allow unauthenticated invocations
         run: |
