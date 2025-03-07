@@ -19,11 +19,13 @@ application {
 
     if (isOpenTelemetryReady) {
         applicationDefaultJvmArgs += "-javaagent:$openTelemetryAgentJar"
+        applicationDefaultJvmArgs += "-Dotel.javaagent.logging=application"
     }
 }
 
 dependencies {
     implementation(project(":interfaces"))
+    implementation(project(":external"))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)

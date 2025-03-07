@@ -20,6 +20,7 @@ subprojects {
     apply(plugin = libs.plugins.kotlin.asProvider().get().pluginId)
 
     dependencies {
+        implementation(libs.hikaricp)
     }
 }
 

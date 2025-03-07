@@ -11,6 +11,8 @@ plugins {
 dependencies {
     implementation(libs.mysql.connector.j)
     implementation(libs.mysql.socket.factory.connector.j8)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
 }
 
 val trialDB =

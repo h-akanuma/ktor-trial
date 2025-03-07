@@ -12,6 +12,7 @@ google-cloud-tools = "3.4.4"
 download = "5.6.0"
 opentelemetry-java-instrumentation = "v2.13.3"
 opentelemetry-exporter-auto = "0.33.0"
+hikaricp = "6.2.1"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -32,6 +33,7 @@ koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
 koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
+hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
 
 [plugins]
 kotlin = { id = "kotlin" }
