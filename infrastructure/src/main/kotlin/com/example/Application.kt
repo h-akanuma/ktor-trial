@@ -58,7 +58,7 @@ fun Application.installStatusPages() {
     install(StatusPages) {
         exception<ObjectNotFoundException> { call, cause ->
             this@installStatusPages.log.info(cause.message)
-            call.respond(HttpStatusCode.BadRequest, cause.message!!)
+            call.respond(HttpStatusCode.NotFound, cause.message!!)
         }
     }
 }
