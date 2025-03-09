@@ -1,12 +1,16 @@
 package com.example
 
+import com.example.exception.ObjectNotFoundException
 import com.example.shared.database.DatabaseConfig
 import com.example.shared.database.DatabaseFactory
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
 import org.koin.ktor.plugin.Koin
 
 fun main(args: Array<String>) {
@@ -29,6 +33,8 @@ fun Application.module() {
 
     configureDatabase()
     configureRouting()
+
+    installStatusPages()
 }
 
 fun Application.configureDatabase() {
@@ -46,4 +52,13 @@ fun Application.configureDatabase() {
     DatabaseConfig.minimumIdle = config.property("trial.database.minimumIdle").getString().toInt()
 
     DatabaseFactory.initLocal()
+}
+
+fun Application.installStatusPages() {
+    install(StatusPages) {
+        exception<ObjectNotFoundException> { call, cause ->
+            this@installStatusPages.log.info(cause.message)
+            call.respond(HttpStatusCode.BadRequest, cause.message!!)
+        }
+    }
 }

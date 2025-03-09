@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":interfaces"))
     implementation(project(":external"))
     implementation(project(":use-cases"))
+    implementation(project(":common-lib"))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
@@ -43,6 +44,7 @@ dependencies {
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
     implementation(libs.ktor.server.resources)
+    implementation(libs.ktor.server.status.pages)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.koin.test)
