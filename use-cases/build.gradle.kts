@@ -3,7 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":use-cases"))
-
     implementation(libs.ktor.serialization.kotlinx.json)
 }

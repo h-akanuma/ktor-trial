@@ -9,10 +9,16 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":use-cases"))
+    implementation(project(":common-lib"))
+
     implementation(libs.mysql.connector.j)
     implementation(libs.mysql.socket.factory.connector.j8)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.java.time)
+    implementation(libs.kotlinx.coroutines.core)
 }
 
 val trialDB =
