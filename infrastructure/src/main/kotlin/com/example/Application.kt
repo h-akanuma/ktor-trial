@@ -10,6 +10,7 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import org.koin.ktor.plugin.Koin
 
@@ -27,6 +28,7 @@ fun Application.module() {
         modules(Module.modules())
     }
     install(CallLogging)
+    install(Resources)
     install(ContentNegotiation) {
         json()
     }
