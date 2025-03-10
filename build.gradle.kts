@@ -21,6 +21,7 @@ subprojects {
 
     dependencies {
         implementation(libs.hikaricp)
+        implementation(libs.kotlin.result)
     }
 }
 
