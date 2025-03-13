@@ -13,6 +13,13 @@ object DatabaseFactory {
         )
     }
 
+    fun initForTest(): Database {
+        return Database.connect(
+            datasource = hikariLocal(),
+            databaseConfig = exposedDatabaseConfig()
+        )
+    }
+
     fun hikariLocal(): HikariDataSource {
         val config = hikariConfigCommon()
         config.validate()

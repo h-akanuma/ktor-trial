@@ -22,6 +22,24 @@ subprojects {
     dependencies {
         implementation(libs.hikaricp)
         implementation(libs.kotlin.result)
+
+        testImplementation(libs.junit.jupiter.api)
+        testImplementation(libs.junit.jupiter.params)
+        testImplementation(libs.junit.jupiter.engine)
+        testImplementation(libs.assertj.core)
+        testImplementation(libs.koin.test)
+    }
+
+    tasks {
+        test {
+            useJUnitPlatform()
+            testLogging {
+                events("passed", "skipped", "failed")
+            }
+
+            // 変更がないテストも毎回実行されるようにする
+            dependsOn("cleanTest")
+        }
     }
 }
 

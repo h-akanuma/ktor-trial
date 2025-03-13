@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.download)
 }
 
-val isOpenTelemetryReady = (System.getenv("IS_OPENTELEMETRY_READY") ?: "true") == "true"
+val isOpenTelemetryReady = (System.getenv("IS_OPENTELEMETRY_READY") ?: "false") == "true"
 val openTelemetryAgentJar = layout.buildDirectory.file("otel/opentelemetry-javaagent.jar").get().asFile
 val openTelemetryExporterAutoJar = layout.buildDirectory.file("exporter-auto.jar").get().asFile
 

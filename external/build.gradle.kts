@@ -19,6 +19,10 @@ dependencies {
     implementation(libs.exposed.dao)
     implementation(libs.exposed.java.time)
     implementation(libs.kotlinx.coroutines.core)
+
+    testImplementation(libs.dbsetup.kotlin)
+
+    testImplementation(project(":test-lib"))
 }
 
 val trialDB =
@@ -62,4 +66,8 @@ flyway {
     url = trialDB
     user = dbUserName
     password = dbPassword
+}
+
+tasks.withType<Test> {
+    environment("JDBC_URL", "jdbc:mysql://localhost:3317/test_db?allowPublicKeyRetrieval=true&useSSL=false")
 }
