@@ -6,6 +6,11 @@ plugins {
 group = "com.example"
 version = "0.0.1"
 
+ext {
+    set("trialDB", System.getenv("JDBC_URL") ?: "jdbc:mysql://localhost:3316/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false")
+    set("testDB", System.getenv("TEST_JDBC_URL") ?: "jdbc:mysql://localhost:3317/test_db?allowPublicKeyRetrieval=true&useSSL=false")
+}
+
 allprojects {
     repositories {
         mavenCentral()

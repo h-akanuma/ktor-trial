@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.download)
 }
 
+val trialDB: String by rootProject.extra
+val testDB: String by rootProject.extra
+
 val isOpenTelemetryReady = (System.getenv("IS_OPENTELEMETRY_READY") ?: "false") == "true"
 val openTelemetryAgentJar = layout.buildDirectory.file("otel/opentelemetry-javaagent.jar").get().asFile
 val openTelemetryExporterAutoJar = layout.buildDirectory.file("exporter-auto.jar").get().asFile
@@ -57,7 +60,7 @@ tasks.withType<ShadowJar> {
 
 tasks.named<JavaExec>("run") {
     args = (project.findProperty("appArgs") as? String)?.split(" ") ?: listOf("-config=application.local.conf")
-    environment("JDBC_URL", "jdbc:mysql://localhost:3316/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false")
+    environment("JDBC_URL", trialDB)
     environment("OTEL_SERVICE_NAME", "ktor-trial")
     environment("OTEL_EXPORTER_OTLP_PROTOCOL", "http/protobuf")
     environment("OTEL_EXPORTER_OTLP_TRACES_ENDPOINT", "http://localhost:4318/v1/traces")
@@ -67,7 +70,7 @@ tasks.named<JavaExec>("run") {
 }
 
 tasks.withType<Test> {
-    environment("JDBC_URL", "jdbc:mysql://localhost:3317/test_db?allowPublicKeyRetrieval=true&useSSL=false")
+    environment("JDBC_URL", testDB)
 }
 
 task<Download>("downloadOpenTelemetryJavaAgent") {

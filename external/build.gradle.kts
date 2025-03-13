@@ -25,10 +25,8 @@ dependencies {
     testImplementation(project(":test-lib"))
 }
 
-val trialDB =
-    System.getenv("JDBC_URL") ?: "jdbc:mysql://localhost:3316/ktor_trial?allowPublicKeyRetrieval=true&useSSL=false"
-val testDB =
-    System.getenv("TEST_JDBC_URL") ?: "jdbc:mysql://localhost:3317/test_db?allowPublicKeyRetrieval=true&useSSL=false"
+val trialDB: String by rootProject.extra
+val testDB: String by rootProject.extra
 
 val dbUserName = System.getenv("DB_USER") ?: "test_user"
 val dbPassword = System.getenv("DB_PASSWORD") ?: "password"
@@ -69,5 +67,5 @@ flyway {
 }
 
 tasks.withType<Test> {
-    environment("JDBC_URL", "jdbc:mysql://localhost:3317/test_db?allowPublicKeyRetrieval=true&useSSL=false")
+    environment("JDBC_URL", testDB)
 }
