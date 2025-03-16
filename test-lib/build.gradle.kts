@@ -2,8 +2,13 @@ dependencies {
     implementation(project(":infrastructure"))
     implementation(project(":external"))
     implementation(project(":use-cases"))
+    implementation(project(":common-lib"))
 
+    implementation(libs.ktor.server.test.host)
     implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.serialization.jackson)
 
     // koin
     implementation(libs.koin.ktor)

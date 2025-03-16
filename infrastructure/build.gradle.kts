@@ -31,6 +31,7 @@ dependencies {
     implementation(project(":external"))
     implementation(project(":use-cases"))
     implementation(project(":common-lib"))
+    testImplementation(project(":test-lib"))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
@@ -52,6 +53,7 @@ dependencies {
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.koin.test)
     testImplementation(libs.koin.test.junit5)
+    testImplementation(libs.dbsetup.kotlin)
 }
 
 tasks.withType<ShadowJar> {

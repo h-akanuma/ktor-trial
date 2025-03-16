@@ -11,6 +11,7 @@ plugins {
 dependencies {
     implementation(project(":use-cases"))
     implementation(project(":common-lib"))
+    testImplementation(project(":test-lib"))
 
     implementation(libs.mysql.connector.j)
     implementation(libs.mysql.socket.factory.connector.j8)
@@ -21,8 +22,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.dbsetup.kotlin)
-
-    testImplementation(project(":test-lib"))
 }
 
 val trialDB: String by rootProject.extra
