@@ -33,6 +33,7 @@ subprojects {
         testImplementation(libs.junit.jupiter.engine)
         testImplementation(libs.assertj.core)
         testImplementation(libs.koin.test)
+        testImplementation(libs.mockk)
     }
 
     tasks {

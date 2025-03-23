@@ -19,6 +19,7 @@ dbsetup-kotlin = "2.1.0"
 junit = "5.11.4"
 assertj = "3.27.3"
 jackson-datatype-jsr310 = "2.18.3"
+mockk = "1.13.17"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -55,6 +56,7 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson-datatype-jsr310" }
 ktor-client-jackson = { module = "io.ktor:ktor-client-jackson", version.ref = "ktor-version" }
 ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor-version" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [plugins]
 kotlin = { id = "kotlin" }
